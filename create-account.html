@@ -1,0 +1,55 @@
+<!-- Start the page 'header' -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PHP Project</title>
+        <meta charset="utf-8">
+        <meta name="author" content="Bambang">
+        <link href="style.css" rel="stylesheet">     
+    </head>
+    <body>
+        <header>
+            <h1>Create Account</h1>
+        </header>
+        <article>
+    <!-- Start the page's show data form -->
+<section class="main">
+
+<!-- Start the page's add entry form -->
+<section class="form1">
+        <h3>Enter account information below</h3>
+        <form action="" method="post">
+            <table>
+                <tr>
+                    <td>Username</td>
+                    <td><input type="text" name="username" id="username" placeholder="MyUserName"></td>
+                </tr>
+                <tr>
+                    <td>Email Address</td>
+                    <td><input type="email" name="email" id="email" placeholder="abc@example.com"></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="text" name="amount" id="amount" placeholder=""></td>
+                </tr>
+                <tr>
+                    <td><ul>
+                        <li>Password must have at least 8 characters</li>
+                        <li>Password must contain capital letter</li>
+                        <li>Password must contain smaller letter</li>
+                        <li>Password must contain number</li>
+                    </ul></td>
+                    <td></td>
+                </tr>                                                
+            </table>
+            <input type="hidden" name="action" value="create">
+            <input type="submit" value="Create">
+        </form>
+    </section>
+
+    <!-- Start the page's footer -->            
+        </article>
+    </body>
+
+</html>
+
