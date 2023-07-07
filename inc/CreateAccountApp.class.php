@@ -4,7 +4,7 @@ require_once('inc/utilities/CreateAccountProcessor.class.php');
 
 class CreateAccountApp {
     static $pwValidation = ['length' => '', 'capital' => '', 'small' => '', 'number' => ''];
-
+    static $pageMessageState = ['pwError'=> 'hidden', 'userNameExist' => 'hidden'];
     static function validateInput() {
         $atLeast8Chars = false;
         if (strlen($_POST['password']) >= 8)
@@ -41,17 +41,23 @@ class CreateAccountApp {
 
     static function run() {
         if (empty($_POST)) {
-            CreateAccountPage::show('hidden',self::$pwValidation);
+            CreateAccountPage::show(self::$pageMessageState,self::$pwValidation);
         }
         else {
             if (self::validateInput()) {
                 if ($_POST['action'] == 'create') {
-                    $msg = CreateAccountProcessor::createAccount();
-                    echo $msg;
+                    if (!CreateAccountProcessor::createAccount()) {
+                        self::$pageMessageState['userNameExist'] = '';
+                        CreateAccountPage::show(self::$pageMessageState, self::$pwValidation);
+                    }
+                    else {
+                        CreateAccountPage::show(self::$pageMessageState, self::$pwValidation);
+                    }
                 }
             }
             else {
-                CreateAccountPage::show('',self::$pwValidation);
+                self::$pageMessageState['pwError'] = '';
+                CreateAccountPage::show(self::$pageMessageState, self::$pwValidation);
             }
         }
 

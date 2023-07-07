@@ -37,12 +37,12 @@ class UserDAO  {
     
     // GET = READ = SELECT
     // This is for a single result.... when do I need it huh?  
-    static function getUser(string $id)  {
+    static function getUser(string $name)  {
        //QUERY, BIND, EXECUTE, RETURN (the single result)
-       $selectUser = "SELECT * FROM User WHERE userId = :UserID";
+       $selectUser = "SELECT * FROM User WHERE username = :userName";
 
        self::$db->query($selectUser);
-       self::$db->bind('UserID', $id);
+       self::$db->bind('userName', $name);
        self::$db->execute();
 
        return self::$db->resultSet();

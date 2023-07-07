@@ -5,24 +5,43 @@ class User {
     private $username;
     private $maskedPw;
 
-    public function __construct($id, $name, $pwMasked)
-    {   
-        $this->userId = $id;
-        $this->username=$name;
-        $this->maskedPw = $pwMasked;
-    }
+    // public function __construct($id, $name, $pwMasked)
+    // {
+    //     $this->userId = $id;
+    //     $this->username = $name;
+    //     $this->maskedPw = $pwMasked;
+    // }
 
-    public function getUserId() {
+    public function getUserId()
+    {
         return $this->userId;
     }
 
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
-    public function getMaskedPw() {
+    public function getMaskedPw()
+    {
         return $this->maskedPw;
     }
+
+    public function setUserId($id)
+    {
+        $this->userId = $id;
+    }
+
+    public function setUsername($name)
+    {
+        $this->username = $name;
+    }
+
+    public function setMaskedPw($pwMasked)
+    {
+        $this->maskedPw = $pwMasked;
+    }
 }
+
 
 ?>

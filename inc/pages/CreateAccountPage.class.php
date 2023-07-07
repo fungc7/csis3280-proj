@@ -37,7 +37,8 @@ class CreateAccountPage {
 <!-- Start the page's add entry form -->
 <section class="form1">
         <h3>Enter account information below</h3>
-        <h4 style="color:red; font:bold;" <?= $hidden?>>** Password entered did not meet all requirements.</h4>
+        <h4 style="color:red; font:bold;" <?= $hidden['pwError']?>>** Unable to create account: Password entered did not meet all requirements.</h4>
+        <h4 style="color:red; font:bold;" <?= $hidden['userNameExist']?>>** Unable to create account: Username already used.</h4>
         <form action="" method="post">
             <table>
                 <tr>
