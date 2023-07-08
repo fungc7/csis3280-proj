@@ -1,6 +1,6 @@
 <?php
 
-class Review
+class ReviewCard
 {
     private $reviewId;
     private $username;
@@ -8,11 +8,20 @@ class Review
     private $rating;
     private $reviewDate;
 
+    public function __construct($reviewId, $username, $content, $rating, $reviewDate)
+    {
+        $this->reviewId = $reviewId;
+        $this->username = $username;
+        $this->content = $content;
+        $this->rating = $rating;
+        $this->reviewDate = $reviewDate;
+    }
+
+    // Getter and Setter methods for review-related attributes
     public function getReviewId()
     {
         return $this->reviewId;
     }
-
     public function setReviewId($reviewId)
     {
         $this->reviewId = $reviewId;
@@ -22,7 +31,6 @@ class Review
     {
         return $this->username;
     }
-
     public function setUsername($username)
     {
         $this->username = $username;
@@ -32,7 +40,6 @@ class Review
     {
         return $this->content;
     }
-
     public function setContent($content)
     {
         $this->content = $content;
@@ -42,7 +49,6 @@ class Review
     {
         return $this->rating;
     }
-
     public function setRating($rating)
     {
         $this->rating = $rating;
@@ -52,16 +58,27 @@ class Review
     {
         return $this->reviewDate;
     }
-
     public function setReviewDate($reviewDate)
     {
         $this->reviewDate = $reviewDate;
     }
 
-    public function getReviewCard() : ReviewCard {
-        $card = new ReviewCard($this->reviewId, $this->username, $this->content, $this->rating, $this->reviewDate);
-        return $card;
+    // Other existing getter and setter methods (for non-review attributes) remain the same
+
+    public function render()
+    {
+?>
+        <div class="card">
+            <h6 class="font-weight-bold"><?php echo $this->getUsername(); ?></h6>
+            <div class="movie-info">
+                <p class="font-weight-normal"><?php echo $this->getContent(); ?></p>
+                <span class="orange"><?php echo $this->getRating(); ?></span>
+            </div>
+            <footer class="font-weight-light"><?php echo $this->getReviewDate(); ?></footer>
+        </div>
+<?php
     }
 }
+
 
 ?>

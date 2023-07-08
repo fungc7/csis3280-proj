@@ -6,9 +6,7 @@ class HomePageApp {
     static function run() {
         MovieDAO::initialize('Movie');
         $movies = MovieDAO::getHomePageMovies();
-        foreach($movies as $m)
-            $movieCards[] = $m->getMovieCard();
-        HomePage::show($movieCards);
+        HomePage::show($movies);
     }
 }
 

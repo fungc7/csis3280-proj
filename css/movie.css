@@ -1,23 +1,21 @@
+/* FROM FULLSTACK */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
 
 :root {
   --primary-color: #22254b;
   --secondary-color: #373b69;
-  --navbar-color: #7378c5;
+  --navbar-color: #6d73ac;
 }
 
 * {
   box-sizing: border-box;
-  color: white;
 }
 
 body {
   background-color: var(--primary-color);
   font-family: 'Poppins', sans-serif;
-  width: 100%;
-    margin: auto;
-    min-height: 900px;
-    padding: 20px;
+  margin: 0;
 }
 
 header {
@@ -42,7 +40,7 @@ nav {
 }
 
 .search::placeholder {
-  color: var(--btn-color);
+  color: #7378c5;
 }
 
 .search:focus {
@@ -108,8 +106,8 @@ main {
   left: 0;
   bottom: 0;
   right: 0;
-  max-height: 110%;
-  transform: translateY(110%);
+  max-height: 100%;
+  transform: translateY(101%);
   transition: transform 0.3s ease-in;
 }
 
@@ -125,7 +123,7 @@ main {
 
 .container {
   width: 90%;
-  max-width: 2000px;
+  max-width: 1100px;
   margin: 1.1em auto;
   
   display: grid;

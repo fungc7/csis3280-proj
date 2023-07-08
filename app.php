@@ -6,6 +6,7 @@ require_once('inc/LoginApp.class.php');
 require_once('inc/CreateAccountApp.class.php');
 require_once('inc/HomePageApp.class.php');
 require_once('inc/MovieApp.class.php');
+require_once('inc/pages/BasePage.class.php');
 require_once('inc/pages/HomePage.class.php');
 require_once('inc/pages/NotFoundPage.class.php');
 require_once('inc/pages/MoviePage.class.php');

@@ -41,3 +41,15 @@ FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
+
+LOAD DATA INFILE 'C:/Users/ivanf/Downloads/review.csv' 
+INTO TABLE review 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+SELECT reviewId, username, title, content, rating, reviewDate
+FROM review AS re
+LEFT JOIN MOVIE AS mov ON re.movieId = mov.movieId
+LEFT JOIN User AS usr ON re.userId = usr.userId;

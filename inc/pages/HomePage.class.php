@@ -2,64 +2,48 @@
 require_once('components/MovieCard.class.php');
 require_once('inc/config.inc.php');
 
-class HomePage {
+class HomePage extends BasePage {
     static $siteHeader = "My Movie Site";
-    static function _header() {
-        ?>
-        <!-- Start the page 'header' -->
-        <!DOCTYPE html>
-        <html>
-            <head>
-                <title></title>
-                <meta charset="utf-8">
-                <meta name="author" content="Bambang">
-                <title>Assignment 3 Bambang</title>   
-                <link href="css/style.css" rel="stylesheet">
-            </head>
-            <body>
-                <header>
-                    <h1><?= self::$siteHeader; ?></h1>
-                </header>
-                <article>
-                <?php
-            }
-    static function _footer() {
-        ?>
-            <!-- Start the page's footer -->            
-            </article>
-            </body>
-        </html>
-        <?php
-    }
     static function _menuBar() {
         ?>
-        <table id="list" class="menu-bar">
-            <thead>
-                <tr>
-                    <th><a href="?page=login">Login</a></th>
-                    <th><a href="?page=join">Create account</a></th>
-                </tr>
-            </thead>
-        </table>
+        <nav id="list" class="navbar navbar-expand-lg navbar-light">
+            <div>
+                <ul class="navbar-nav mr-auto">
+            </div>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="?page=login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="?page=join">Create account</a>
+                </li>
+            </ul>
+            <!-- <a href="?page=login">Login</a>
+            <a href="?page=join">Create account</a> -->
+        </nav>
         <?php
     }
-    static function _body($cards) {
+    static function _body($movies) {
         ?>
+        <body>
+        <header>
+            <h1><?= self::$siteHeader; ?></h1>
+        </header>
         <!-- Start the page's show data form -->
-        <div class="main">
         <?= self::_menuBar() ?>
-        </div> 
-        <div class="movies container">
+        <div class="container">
             <?php
-                foreach($cards as $card)
-                    $card->render();
+                foreach($movies as $mov)
+                    $mov->getMovieCard()->render();
             ?>
         </div>
+        </body>
         <?php
     }
-    static function show($movieCards) {
+    static function show($movies) {
+        self::$pageTitle = "CSIS3280 Project";
         self::_header();
-        self::_body($movieCards);
+        self::_body($movies);
         self::_footer();
     }
 }

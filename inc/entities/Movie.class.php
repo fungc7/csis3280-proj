@@ -7,6 +7,7 @@ class Movie {
     private $imageUrl;
     private $releaseDate;
     private $backdropUrl;
+    private $avgRating;
 
     public function getMovieId() {
         return $this->movieId;
@@ -56,8 +57,12 @@ class Movie {
         $this->backdropUrl = $backdropUrl;
     }
 
+    public function getAvgRating() {
+        return $this->avgRating;
+    }
+
     public function getMovieCard() : MovieCard {
-        $card = new MovieCard($this->movieId, $this->overview, $this->title, $this->imageUrl, $this->backdropUrl);
+        $card = new MovieCard($this->movieId, $this->overview, $this->title, $this->imageUrl, $this->backdropUrl, $this->avgRating);
         return $card;
     }
 }

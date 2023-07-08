@@ -6,15 +6,17 @@ class MovieCard {
     private $title;
     private $imageUrl;
     private $backdropUrl;
+    private $avgRating;
     private $IMAGE_URL_PREFIX = IMAGE_URL;
 
-    public function __construct($movieId, $overview, $title, $imageUrl, $backdropUrl)
+    public function __construct($movieId, $overview, $title, $imageUrl, $backdropUrl, $avgRating)
     {
         $this->movieId = $movieId;
         $this->overview = $overview;
         $this->title = $title;
         $this->imageUrl = $imageUrl;
         $this->backdropUrl = $backdropUrl;
+        $this->avgRating = $avgRating;
     }
 
     // getter
@@ -23,6 +25,7 @@ class MovieCard {
     function getTitle() { return $this->title; }
     function getImageUrl() { return $this->imageUrl; }
     function getBackdropUrl() { return $this->backdropUrl; }
+    function getAvgRating() { return $this->avgRating; }
     // setter
     function setMovieId($movieId)  { $this->movieId = $movieId; }
     function setOverview($overview) { $this->overview = $overview; }
@@ -38,7 +41,7 @@ class MovieCard {
             </a>
             <div class="movie-info">
                 <h3><?php echo $this->getTitle(); ?></h3>
-                <span class="orange">6.6</span>
+                <span class="orange"><?php printf("%.1f", $this->getAvgRating()); ?></span>
             </div>
             <div class="overview">
                 <h3>Overview</h3>

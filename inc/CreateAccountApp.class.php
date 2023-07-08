@@ -5,6 +5,9 @@ require_once('inc/utilities/CreateAccountProcessor.class.php');
 class CreateAccountApp {
     static $pwValidation = ['length' => '', 'capital' => '', 'small' => '', 'number' => ''];
     static $pageMessageState = ['pwError'=> 'hidden', 'userNameExist' => 'hidden'];
+    static $passedColor = 'mediumseagreen';
+    static $failedColor = 'crimson';
+
     static function validateInput() {
         $atLeast8Chars = false;
         if (strlen($_POST['password']) >= 8)
@@ -17,24 +20,24 @@ class CreateAccountApp {
         $hasNumber = filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[0-9]/")));
 
         if ($atLeast8Chars)
-            self::$pwValidation['length'] = 'green';
+            self::$pwValidation['length'] = self::$passedColor;
         else
-            self::$pwValidation['length'] = 'red';
+            self::$pwValidation['length'] = self::$failedColor;
         
         if ($hasCapitalLetter)
-            self::$pwValidation['capital'] = 'green';
+            self::$pwValidation['capital'] = self::$passedColor;
         else
-            self::$pwValidation['capital'] = 'red';
+            self::$pwValidation['capital'] = self::$failedColor;
 
         if ($hasSmallLetter)
-            self::$pwValidation['small'] = 'green';
+            self::$pwValidation['small'] = self::$passedColor;
         else
-            self::$pwValidation['small'] = 'red';
+            self::$pwValidation['small'] = self::$failedColor;
 
         if ($hasNumber)
-            self::$pwValidation['number'] = 'green';
+            self::$pwValidation['number'] = self::$passedColor;
         else
-            self::$pwValidation['number'] = 'red';
+            self::$pwValidation['number'] = self::$failedColor;
 
         return $atLeast8Chars && $hasCapitalLetter && $hasSmallLetter && $hasNumber;
     }

@@ -39,7 +39,19 @@ class MovieDAO  {
     // This is for a single result.... when do I need it huh?  
     static function getMovie(string $MovieId)  {
        //QUERY, BIND, EXECUTE, RETURN (the single result)
-       $selectMovie = "SELECT * FROM Movie WHERE movieId = :MovieId";
+       $selectMovie = "SELECT l.movieId, l.title, l.overview, l.imageUrl, l.releaseDate, l.backdropUrl, r.avgRating
+        FROM
+        (
+            SELECT * FROM movie
+            WHERE movieId = :MovieId
+        ) AS l
+        LEFT JOIN
+        (
+            SELECT movieId, AVG(rating) AS avgRating
+            FROM review
+            WHERE movieId = :MovieId
+        ) AS r
+        ON l.movieId = r.movieId;";
 
        self::$db->query($selectMovie);
        self::$db->bind('MovieId', $MovieId);
@@ -63,7 +75,18 @@ class MovieDAO  {
     }
 
     static function getHomePageMovies() {
-        $selectAllMovie = "SELECT * FROM Movie ORDER BY releaseDate desc limit 9;";
+        $selectAllMovie = "SELECT l.movieId, l.title, l.overview, l.imageUrl, l.releaseDate, l.backdropUrl, r.avgRating
+        FROM
+        movie as l
+        LEFT JOIN
+        (
+            SELECT movieId, AVG(rating) AS avgRating
+            FROM review
+            group by movieId
+        ) AS r
+        ON l.movieId = r.movieId
+        ORDER BY l.releaseDate DESC
+        LIMIT 9;";
         self::$db->query($selectAllMovie);
         self::$db->execute();
         return self::$db->resultSet();
@@ -114,15 +137,15 @@ class MovieDAO  {
     // You may need to also query some columns from the RoomsType class/table. 
     // Those columns are needed for cost calculation and display the rooms type detail in the main page
     static function getMovieReview() {
-        /*
+        
         //Prepare the Query
-        $selectReservationList = "SELECT movieId, userId, Amount, TicketDetail, Amount*TicketCost Cost FROM Reservation LEFT JOIN TicketClass ON TicketClassID=ID;";
+        $selectReview = "SELECT reviewId, username, title, content, rating, reviewDate FROM review AS re LEFT JOIN MOVIE AS mov ON re.movieId = mov.movieId LEFT JOIN User AS usr ON re.userId = usr.userId;";
         //execute the query
-        self::$db->query($selectReservationList);
+        self::$db->query($selectReview);
         self::$db->execute();
         //Return row results
         return self::$db->resultSet();
-         */
+        
     }
 
 }
