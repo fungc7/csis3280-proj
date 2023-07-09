@@ -4,67 +4,68 @@ require_once('inc/config.inc.php');
 
 class MoviePage extends BasePage{
     private static $IMAGE_URL_PREFIX = IMAGE_URL;
-
-    static function _menuBar() {
-        ?>
-        <body>
-        <nav id="list" class="navbar navbar-expand-lg navbar-light">
-            <div>
-                <ul class="navbar-nav mr-auto">
-            </div>
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="?page=login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="?page=join">Create account</a>
-                </li>
-            </ul>
-            <!-- <a href="?page=login">Login</a>
-            <a href="?page=join">Create account</a> -->
-        </nav>
-        </body>
-        <?php
-    }
-    static function _body($movie, $review) {
+    
+    static function _body($movie, $review, $contentValidation, $ratingValidation) {
         ?>
         <body>
                 <header>
                     <h1><a href="?page=home">Logo</a></h1>
                 </header>
-                <?= self::_menuBar() ?>
+                <?php echo self::_menuBar() ?>
             <div class="card mb-3">
                 <img class="card-img-top" src="<?php echo self::$IMAGE_URL_PREFIX . $movie->getBackdropUrl(); ?>" alt="<?php echo $movie->getTitle(); ?>">
                 <h4 class="card-title">Overview</h4>
                 <p class="card-text"><?php echo $movie->getOverview(); ?></p>
             </div>
             <div class="reviews">
+                <h4 class="card-title">Reviews</h4>
                 <?php
                     foreach($review as $re)
                         $re->getReviewCard()->render();
                 ?>
-                <!-- <div class="card">
-                    <h6 class="font-weight-bold">Username</h6> 
-                    <div class="movie-info">
-                        <p class="font-weight-normal"> Review Text</p>
-                        <span class="orange">6.6</span>
-                    </div> 
-                    <footer class="font-weight-light">2020-11-11</footer>
-                </div> -->
+                <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) { ?>
+                <h4 class="card-title">Write Your Review !</h4>
                 <div class="form-group">
                     <form action="" method="post">
-                        <textarea class="form-control" name="movie-review" id="movie-review" rows="3"></textarea>
+                        <textarea class="form-control" name="content" id="reviewcontent" rows="3"></textarea>
+                        <?php
+                        if ($contentValidation == "fail")
+                            echo '<div class="alert alert-danger w-25">Please write your review.</div>';
+                        ?>
+                        <select class="custom-select w-25" name="rating">
+                            <option value="default" selected>Rating 1-10</option>
+                            <?php
+                                for ($i = 1; $i <= 10; $i++)
+                                    echo "<option value=\"{$i}\" style=\"color:black;\">{$i}</option>";
+                            ?>
+                        </select><br>
+                        <?php
+                        if ($ratingValidation == "fail")
+                        echo '<div class="alert alert-danger w-25">Please give your rating.</div>';
+                        ?>
+                        <input type="hidden" name="userId" value=
+                            <?php 
+                            if (isset($_SESSION['userid']))
+                                echo "\"" . $_SESSION['userid'] . "\"";
+                            ?>
+                        >
+                        <input type="hidden" name="movieId" value="<?php echo $movie->getMovieId(); ?>" />
                         <input type="hidden" name="action" value="post-review">
                         <input type="submit" class="btn btn-dark" name="submit" value="Submit"/>
                     </form>
                 </div>
+                <?php } else { ?>
+                    <div>
+                        <p> <a href="?page=login">Login</a> to write a review! </p>
+                    </div>
+                <?php } ?>
             </div>
         </body>
         <?php
     }
-    static function show($movie, $review) {
+    static function show($movie, $review, $contentValidation, $ratingValidation) {
         self::_header();
-        self::_body($movie, $review);
+        self::_body($movie, $review, $contentValidation, $ratingValidation);
         self::_footer();
     }
 }

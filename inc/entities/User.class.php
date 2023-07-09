@@ -41,6 +41,13 @@ class User {
     {
         $this->maskedPw = $pwMasked;
     }
+
+    public function verifyPassword(string $maskedPw)
+    {
+        if ($maskedPw == $this->getMaskedPw())
+            return true;
+        return false;
+    }
 }
 
 

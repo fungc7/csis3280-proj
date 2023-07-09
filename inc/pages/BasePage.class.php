@@ -24,6 +24,46 @@ class BasePage {
         </html>
         <?php
     }
+    
+    static function _menuBar() {
+        if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
+         $url = "https://";   
+        else  
+            $url = "http://";   
+        // Append the host(domain name, ip) to the URL.   
+        $url.= $_SERVER['HTTP_HOST'];   
+        
+        // Append the requested resource location to the URL   
+        $url.= $_SERVER['REQUEST_URI']; 
+        echo $url;
+        ?>
+        <nav id="list" class="navbar navbar-expand-lg navbar-light">
+            <div>
+                <ul class="navbar-nav mr-auto">
+            </div>
+            <ul class="navbar-nav mr-auto">
+                    <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) { ?>
+                        <li class="nav-item"> 
+                        <form action="<?= $url ?>" method="POST">
+                            <!-- <a class="nav-link" href="">Logout</a> -->
+                            <input type="submit" class="nav-link" name="logout" value="Logout" >
+                            <!-- <a class="nav-link" onclick="this.parentNode.submit();">Logout</a> -->
+                        </form>
+                        </li>
+                    <?php } else { ?>
+                        <li class="nav-item">
+                        <a class="nav-link" href="?page=login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="?page=join">Create account</a>
+                        </li>
+                    <?php } ?>
+            </ul>
+            <!-- <a href="?page=login">Login</a>
+            <a href="?page=join">Create account</a> -->
+        </nav>
+        <?php
+    }
 
 }
 

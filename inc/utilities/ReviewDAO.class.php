@@ -22,6 +22,17 @@ class ReviewDAO  {
         
     }
 
+    static function insertReview ($userId, $movieId, $content, $rating) {
+        $insertReview = "INSERT INTO Review (reviewId, userId, movieId, content, rating, reviewDate) SELECT MAX(reviewId) + 1, :UserID, :MovieID, :Content, :Rating, CURDATE() FROM Review";
+        self::$db->query($insertReview);
+        self::$db->bind('UserID', $userId);
+        self::$db->bind('MovieID', $movieId);
+        self::$db->bind('Content', $content);
+        self::$db->bind('Rating', $rating);
+        self::$db->execute();
+
+        return self::$db->lastInsertedId();
+    }
 }
 
 ?>

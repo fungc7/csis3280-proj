@@ -152,3 +152,7 @@ main {
 h2 {
   padding: 2rem;
 }
+
+.rating {
+  color: black;
+}
