@@ -18,7 +18,7 @@ CREATE TABLE IF not EXISTs User (
 );
 
 CREATE TABLE IF NOT EXISTs Review (
-    reviewId VARCHAR(256) PRIMARY KEY,
+    reviewId INT PRIMARY KEY,
     userId VARCHAR(256) ,
     movieId INT,
     content VARCHAR(2000) NOT NULL,
@@ -28,14 +28,14 @@ CREATE TABLE IF NOT EXISTs Review (
     FOREIGN KEY (userId) References User(userId)
 );
 
-LOAD DATA INFILE 'C:/Temp/movies.csv'
+LOAD DATA INFILE 'C:/Users/ivanf/Downloads/movies_.csv'
 INTO TABLE movie 
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE 'C:/Temp/user.csv' 
+LOAD DATA INFILE 'C:/Users/ivanf/Downloads/user.csv' 
 INTO TABLE user 
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
@@ -49,7 +49,17 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-SELECT reviewId, username, title, content, rating, reviewDate
-FROM review AS re
-LEFT JOIN MOVIE AS mov ON re.movieId = mov.movieId
-LEFT JOIN User AS usr ON re.userId = usr.userId;
+-- SELECT reviewId, username, title, content, rating, reviewDate
+-- FROM review AS re
+-- LEFT JOIN MOVIE AS mov ON re.movieId = mov.movieId
+-- LEFT JOIN User AS usr ON re.userId = usr.userId;
+
+-- INSERT INTO Review 
+-- VALUES (
+--     (SELECT MAX(reviewId)+1 FROM Review),
+--     :userId,
+--     :movieId,
+--     :content;
+--     :rating,
+--     CURDATE()
+-- );

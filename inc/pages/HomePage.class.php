@@ -23,7 +23,6 @@ class HomePage extends BasePage {
         <?php
     }
     static function show($movies) {
-        self::$pageTitle = "CSIS3280 Project";
         self::_header();
         self::_body($movies);
         self::_footer();

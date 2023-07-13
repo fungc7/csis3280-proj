@@ -46,7 +46,6 @@ class MovieApp {
             if ($contentValidation == "pass" && $ratingValidation == "pass")
                 echo self::handlePostReview();
         }
-        echo $contentValidation . " " . $ratingValidation . " ";
         // display page
         if (count($movies) > 0) {
             $targetMovie = $movies[0];

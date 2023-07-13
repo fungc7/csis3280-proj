@@ -1,4 +1,6 @@
 <?php
+define('AUTHOR', 'Ivan Fung');
+define('STUDENT_ID', '300371938');
 define("IMAGE_URL", "https://image.tmdb.org/t/p/w1280");
 define("DB_HOST", "localhost");  
 define("DB_USER", "root");  

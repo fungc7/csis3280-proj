@@ -6,6 +6,7 @@ class MoviePage extends BasePage{
     private static $IMAGE_URL_PREFIX = IMAGE_URL;
     
     static function _body($movie, $review, $contentValidation, $ratingValidation) {
+        $loggedIn = isset($_SESSION['loggedin']) && $_SESSION['loggedin'];
         ?>
         <body>
                 <header>
@@ -19,11 +20,16 @@ class MoviePage extends BasePage{
             </div>
             <div class="reviews">
                 <h4 class="card-title">Reviews</h4>
+                <?php if (!$loggedIn) { ?>
+                <div>
+                    <p> <a href="?page=login">Login</a> to write a review! </p>
+                </div>
+                <?php } ?>
                 <?php
                     foreach($review as $re)
                         $re->getReviewCard()->render();
                 ?>
-                <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) { ?>
+                <?php if ($loggedIn) { ?>
                 <h4 class="card-title">Write Your Review !</h4>
                 <div class="form-group">
                     <form action="" method="post">
@@ -54,10 +60,6 @@ class MoviePage extends BasePage{
                         <input type="submit" class="btn btn-dark" name="submit" value="Submit"/>
                     </form>
                 </div>
-                <?php } else { ?>
-                    <div>
-                        <p> <a href="?page=login">Login</a> to write a review! </p>
-                    </div>
                 <?php } ?>
             </div>
         </body>

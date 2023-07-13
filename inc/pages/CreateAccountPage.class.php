@@ -6,12 +6,15 @@ class CreateAccountPage extends BasePage {
     static function _body($hidden, $validation) {
         ?>
         <body>
-        <h1><a href="?page=home">Logo</a></h1>
-        <h2>Create Account</h2>
+        <header>
+                <h1><a href="?page=home">Logo</a></h1>
+            </header>
+            <?= self::_menuBar() ?><br> 
+            <h3 style="color: white">Create Account</h3>
 
 <!-- Start the page's add entry form -->
 <div class="form-group">
-        <h3>Enter account information below</h3>
+        <h4>Enter account information below</h4>
         <div class="alert alert-danger" <?= $hidden['pwError']?>>Unable to create account: Password entered did not meet all requirements.</div>
         <div class="alert alert-danger" <?= $hidden['userNameExist']?>>Unable to create account: Username already used.</div>
         <form action="" method="post">

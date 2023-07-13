@@ -11,7 +11,7 @@ class BasePage {
             <head>
                 <title></title>
                 <meta charset="utf-8">
-                <meta name="author" content="Bambang">
+                <meta name="author" content="<?= AUTHOR ?>">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <title><?= self::$pageTitle ?></title>   
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -35,7 +35,6 @@ class BasePage {
         
         // Append the requested resource location to the URL   
         $url.= $_SERVER['REQUEST_URI']; 
-        echo $url;
         ?>
         <nav id="list" class="navbar navbar-expand-lg navbar-light">
             <div>
