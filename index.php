@@ -76,7 +76,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 
             case 'login':
                 // Route logged in session to home to prevent duplicated login
-                if ($_SESSION['loggedin'])
+                if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'])
                     routeToLastVisited();
                 else
                     LoginApp::run("default");
@@ -84,14 +84,14 @@ switch($_SERVER['REQUEST_METHOD']) {
 
             case 'join':
                 // Route logged in session to home to prevent duplicated login
-                if ($_SESSION['loggedin'])
+                if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'])
                     routeToLastVisited();
                 else
                     CreateAccountApp::run("GET");
                 break;
 
             default:
-                NotFoundPage::show();
+                HomePageApp::run();
                 break;
         }
         break;

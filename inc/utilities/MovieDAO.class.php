@@ -15,25 +15,6 @@ class MovieDAO  {
         //Remember to send in the class name for this DAO
         self::$db = new PDOService($className);
     }
-
-    // One of the functionality for the class abstracted by this DAO: CREATE
-    // Remember that Create means INSERT
-    static function createReservation(Movie $newMovie) {
-        /*
-        $insertReservation = "INSERT INTO Reservation (ReservationID, Email, Amount, TicketClassID) VALUES (:reservationId, :email, :amt, :ticketClassId)";
-        // QUERY BIND EXECUTE 
-        // You may want to return the last inserted id
-        self::$db->query($insertReservation);
-        self::$db->bind(':reservationId', $newReservation->getReservationID());
-        self::$db->bind(':email', $newReservation->getEmail());
-        self::$db->bind(':amt', $newReservation->getAmount());
-        self::$db->bind(':ticketClassId', $newReservation->getTicketClassID());
-
-        self::$db->execute();
-
-        return self::$db->lastInsertedId();
-        */
-    }
     
     // GET = READ = SELECT
     // This is for a single result.... when do I need it huh?  
@@ -92,50 +73,6 @@ class MovieDAO  {
         return self::$db->resultSet();
     }
 
-    // UPDATE means update   
-    static function updateReservation (Movie $MovieToUpdate) {
-        /*
-        // QUERY, BIND, EXECUTE
-        // You may want to return the rowCount
-        $editReservation = "UPDATE Reservation SET Email=:email, Amount=:amount, TicketClassID=:ticketClassId ";
-        $editReservation .= "WHERE ReservationID =:reservationId";
-
-        self::$db->query($editReservation);
-        self::$db->bind(":reservationId", $ReservationToUpdate->getReservationID());
-        self::$db->bind(":email", $ReservationToUpdate->getEmail());
-        self::$db->bind(":amount", $ReservationToUpdate->getAmount());
-        self::$db->bind(":ticketClassId", $ReservationToUpdate->getTicketClassID());
-
-        self::$db->execute();
-
-        return self::$db->rowCount();
-        */
-    }
-    
-    // Sorry, I need to DELETE your record 
-    static function deleteReservation(string $ReservationId) {
-        $deleteReservation = "DELETE FROM Reservation WHERE ReservationID = :reservationId";
-        // Yea...yea... it is a drill like the one before
-        try {
-            self::$db->query($deleteReservation);
-            self::$db->bind(":reservationId", $ReservationId);
-            self::$db->execute();
-
-            if (self::$db->rowCount() != 1) {
-                throw new Exception("Problem in deleting the book {$ReservationId}");
-            }
-        }
-        catch (Exception $e) {
-            error_log($e->getMessage());
-            return false;
-        }
-        return true;
-    }
-
-    // WE NEED TO USE JOIN HERE
-    // Make sure to select from both tables joined at the correct column
-    // You may need to also query some columns from the RoomsType class/table. 
-    // Those columns are needed for cost calculation and display the rooms type detail in the main page
     static function getMovieReview() {
         
         //Prepare the Query

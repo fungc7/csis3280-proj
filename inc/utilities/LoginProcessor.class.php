@@ -6,11 +6,19 @@ class LoginProcessor {
         UserDAO::initialize('User');
         $usernameEmail = $_POST["username-email"];
         $maskedPw = hash("sha256", $_POST["password"]);
-        $users = UserDAO::getUser($usernameEmail);
-        if (count($users) > 0) {
-            if ($users[0]->verifyPassword($maskedPw)) {
-                $_SESSION['user'] = $users[0]->getUsername();
-                $_SESSION['userid'] = $users[0]->getUserId();
+        $usersByName = UserDAO::getUser($usernameEmail);
+        if (count($usersByName) > 0) {
+            if ($usersByName[0]->verifyPassword($maskedPw)) {
+                $_SESSION['user'] = $usersByName[0]->getUsername();
+                $_SESSION['userid'] = $usersByName[0]->getUserId();
+                return true;
+            }
+        }
+        $usersByEmail = UserDAO::getUserByEmail($usernameEmail);
+        if (count($usersByEmail) > 0 ) {
+            if ($usersByEmail[0]->verifyPassword($maskedPw)) {
+                $_SESSION['user'] = $usersByEmail[0]->getUsername();
+                $_SESSION['userid'] = $usersByEmail[0]->getUserId();
                 return true;
             }
         }

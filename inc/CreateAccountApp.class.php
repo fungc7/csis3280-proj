@@ -4,7 +4,7 @@ require_once('inc/utilities/CreateAccountProcessor.class.php');
 
 class CreateAccountApp {
     static $pwValidation = ['length' => '', 'capital' => '', 'small' => '', 'number' => ''];
-    static $pageMessageState = ['pwError'=> 'hidden', 'userNameExist' => 'hidden'];
+    static $pageMessageState = ['pwError'=> 'hidden', 'userNameExist' => 'hidden', 'emailError' => 'hidden'];
     static $passedColor = 'mediumseagreen';
     static $failedColor = 'crimson';
 
@@ -12,7 +12,7 @@ class CreateAccountApp {
         $atLeast8Chars = false;
         if (strlen($_POST['password']) >= 8)
             $atLeast8Chars = true;
-
+        $emailValidation = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $hasCapitalLetter = filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[A-Z]/")));
 
         $hasSmallLetter = filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[a-z]/")));
@@ -23,7 +23,8 @@ class CreateAccountApp {
             self::$pwValidation['length'] = self::$passedColor;
         else
             self::$pwValidation['length'] = self::$failedColor;
-        
+        if (!$emailValidation)
+            self::$pageMessageState['emailError'] = "";
         if ($hasCapitalLetter)
             self::$pwValidation['capital'] = self::$passedColor;
         else
@@ -39,7 +40,14 @@ class CreateAccountApp {
         else
             self::$pwValidation['number'] = self::$failedColor;
 
-        return $atLeast8Chars && $hasCapitalLetter && $hasSmallLetter && $hasNumber;
+        $noPasswordError = $atLeast8Chars && $hasCapitalLetter && $hasSmallLetter && $hasNumber;
+        // No password error, reset the color of password critirea as default
+        if ($noPasswordError)
+            self::$pwValidation = ['length' => '', 'capital' => '', 'small' => '', 'number' => ''];
+        return [
+            'email' => $emailValidation,
+            'password' => $noPasswordError
+        ];
     }
 
     static function run($method) {
@@ -49,7 +57,8 @@ class CreateAccountApp {
                 break;
             case 'POST':
                 if ($_POST['action'] == 'create') {
-                    if (self::validateInput()) {       
+                    $validationRes = self::validateInput();
+                    if ($validationRes['email'] && $validationRes['password']) {       
                         $createAccountRes = CreateAccountProcessor::createAccount();
                         if (!$createAccountRes) {
                             self::$pageMessageState['userNameExist'] = '';
@@ -59,14 +68,19 @@ class CreateAccountApp {
                             return true;
                     }
                     else {
-                        self::$pageMessageState['pwError'] = '';
+                        if (!$validationRes['password'])
+                            self::$pageMessageState['pwError'] = '';
+                           
+                        if (!$validationRes['email'])
+                            self::$pageMessageState['emailError'] = '';
+                        print_r(self::$pwValidation);
                         CreateAccountPage::show(self::$pageMessageState, self::$pwValidation);
                     }
                 }
                 return false;
                 break;
             default:
-                CreateAccountPage::show(self::$pageMessageState,self::$pwValidation);
+                CreateAccountPage::show(self::$pageMessageState, self::$pwValidation);
                 break;
         }
 

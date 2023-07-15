@@ -3,13 +3,12 @@ require_once('components/MovieCard.class.php');
 require_once('inc/config.inc.php');
 
 class HomePage extends BasePage {
-    static $siteHeader = "My Movie Site";
     
     static function _body($movies) {
         ?>
         <body>
         <header>
-            <h1><?= self::$siteHeader; ?></h1>
+            <?= self::_logo(); ?>
         </header>
         <!-- Start the page's show data form -->
         <?= self::_menuBar() ?>
