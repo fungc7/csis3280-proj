@@ -42,29 +42,33 @@ class CreateAccountApp {
         return $atLeast8Chars && $hasCapitalLetter && $hasSmallLetter && $hasNumber;
     }
 
-    static function run() {
-        if (empty($_POST)) {
-            CreateAccountPage::show(self::$pageMessageState,self::$pwValidation);
-        }
-        else {
-            if (self::validateInput()) {
+    static function run($method) {
+        switch ($method) {
+            case 'GET':
+                CreateAccountPage::show(self::$pageMessageState,self::$pwValidation);
+                break;
+            case 'POST':
                 if ($_POST['action'] == 'create') {
-                    if (!CreateAccountProcessor::createAccount()) {
-                        self::$pageMessageState['userNameExist'] = '';
-                        CreateAccountPage::show(self::$pageMessageState, self::$pwValidation);
+                    if (self::validateInput()) {       
+                        $createAccountRes = CreateAccountProcessor::createAccount();
+                        if (!$createAccountRes) {
+                            self::$pageMessageState['userNameExist'] = '';
+                            CreateAccountPage::show(self::$pageMessageState, self::$pwValidation);
+                        }
+                        else
+                            return true;
                     }
                     else {
+                        self::$pageMessageState['pwError'] = '';
                         CreateAccountPage::show(self::$pageMessageState, self::$pwValidation);
                     }
                 }
-            }
-            else {
-                self::$pageMessageState['pwError'] = '';
-                CreateAccountPage::show(self::$pageMessageState, self::$pwValidation);
-            }
+                return false;
+                break;
+            default:
+                CreateAccountPage::show(self::$pageMessageState,self::$pwValidation);
+                break;
         }
 
     }
 }
-
-?>

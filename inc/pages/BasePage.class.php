@@ -2,7 +2,7 @@
 
 class BasePage {
     static $pageTitle = "";
-
+    
     static function _header() {
         ?>
         <!-- Start the page 'header' -->
@@ -10,6 +10,7 @@ class BasePage {
         <html>
             <head>
                 <title></title>
+                <base href="<?= BASE_URL;?>">
                 <meta charset="utf-8">
                 <meta name="author" content="<?= AUTHOR ?>">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,6 +23,11 @@ class BasePage {
     static function _footer() {
         ?>
         </html>
+        <?php
+    }
+    static function _logo() {
+        ?>
+        <h1><a href="<?php echo SimpleRoute::getBaseURL(); ?>">Logo</a></h1>
         <?php
     }
     
@@ -43,18 +49,16 @@ class BasePage {
             <ul class="navbar-nav mr-auto">
                     <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) { ?>
                         <li class="nav-item"> 
-                        <form action="<?= $url ?>" method="POST">
-                            <!-- <a class="nav-link" href="">Logout</a> -->
+                        <form action="<?php echo SimpleRoute::getBaseURL() . "/logout" ?>" method="POST">
                             <input type="submit" class="nav-link" name="logout" value="Logout" >
-                            <!-- <a class="nav-link" onclick="this.parentNode.submit();">Logout</a> -->
                         </form>
                         </li>
                     <?php } else { ?>
                         <li class="nav-item">
-                        <a class="nav-link" href="?page=login">Login</a>
+                        <a class="nav-link" href="<?php echo SimpleRoute::getBaseURL() . "/login"; ?>">Login</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="?page=join">Create account</a>
+                        <a class="nav-link" href="<?php echo SimpleRoute::getBaseURL() . "/join"; ?>">Create account</a>
                         </li>
                     <?php } ?>
             </ul>

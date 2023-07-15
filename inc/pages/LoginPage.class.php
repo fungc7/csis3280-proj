@@ -3,21 +3,25 @@ require_once('BasePage.class.php');
 
 class LoginPage extends BasePage{
     public static $failLoginMsg = "Incorrect Username or Password.";
+    public static $postAccountCreationMsg = "Create account successful! Please try to login with the new account!";
 
-    static function _body($loginRes) {
+    static function _body($mode) {
         ?> 
         <body>
             <header>
-                <h1><a href="?page=home">Logo</a></h1>
+            <?= self::_logo() ?>
             </header>
             <?= self::_menuBar() ?><br> 
             <h3 style="color: white">User Login</h3>
             <?php
-            switch ($loginRes) {
+            switch ($mode) {
                 case "success":
                     break;
                 case "fail";
                     echo "<div class=\"alert alert-danger\">" . self::$failLoginMsg . "</div>";
+                    break;
+                case "postAccountCreation":
+                    echo "<div class=\"alert alert-success\">" . self::$postAccountCreationMsg . "</div>";
                     break;
                 default:
                     break;
@@ -28,7 +32,7 @@ class LoginPage extends BasePage{
                     // if (isset($_SESSION['lastPage']))
                     //     echo $_SESSION['lastPage'];
                     // else
-                        echo htmlspecialchars($_SERVER["PHP_SELF"]); 
+                        echo SimpleRoute::getBaseURL() . "/login"; 
                 ?>" method="post">
                     <div class="form-outline w-50">
                         <label for="username-email" name="username-email"> Username Or Email</label>
@@ -55,9 +59,9 @@ class LoginPage extends BasePage{
         <?php
     }
 
-    static function show($loginRes) {
+    static function show($mode) {
         self::_header();
-        self::_body($loginRes);
+        self::_body($mode);
         self::_footer();
     }
 }

@@ -10,7 +10,7 @@ class MoviePage extends BasePage{
         ?>
         <body>
                 <header>
-                    <h1><a href="?page=home">Logo</a></h1>
+                <?= self::_logo() ?>
                 </header>
                 <?php echo self::_menuBar() ?>
             <div class="card mb-3">
@@ -22,7 +22,7 @@ class MoviePage extends BasePage{
                 <h4 class="card-title">Reviews</h4>
                 <?php if (!$loggedIn) { ?>
                 <div>
-                    <p> <a href="?page=login">Login</a> to write a review! </p>
+                    <p> <a href="<?php echo SimpleRoute::getBaseURL() . "/login"; ?>">Login</a> to write a review! </p>
                 </div>
                 <?php } ?>
                 <?php
@@ -32,7 +32,7 @@ class MoviePage extends BasePage{
                 <?php if ($loggedIn) { ?>
                 <h4 class="card-title">Write Your Review !</h4>
                 <div class="form-group">
-                    <form action="" method="post">
+                    <form action="<?php echo SimpleRoute::getBaseURL() . "/movie/" . $movie->getMovieId()?>" method="post">
                         <textarea class="form-control" name="content" id="reviewcontent" rows="3"></textarea>
                         <?php
                         if ($contentValidation == "fail")

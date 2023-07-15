@@ -5,13 +5,13 @@ require_once('utilities/LoginProcessor.class.php');
 require_once('getCurrUrl.php');
 
 class MovieApp {
-    static function handlePostReview() {
+    static function _handlePostReview() {
         print_r(
             [$_POST['userId'], $_POST['movieId'], $_POST['content'] ,$_POST['rating']]
         );
         return ReviewDAO::insertReview($_POST['userId'], $_POST['movieId'], $_POST['content'] ,$_POST['rating']);
     }
-    static function validateReview () {
+    static function _validateReview () {
         $validation = ["hasContent" => "default", "hasRating" => "default"];
         if (strlen($_POST['content']) > 0)
             $validateContent = "pass";
@@ -25,7 +25,7 @@ class MovieApp {
         $validation['hasRating'] = $validateRating;
         return $validation;
     }
-    static function run() {
+    static function run($id, $method = "GET") {
         $url =  getCurrUrl();
         $contentValidation = "default";
         $ratingValidation = "default";
@@ -36,15 +36,15 @@ class MovieApp {
         }
         MovieDAO::initialize('Movie');
         ReviewDAO::initialize('Review');
-        $movies = MovieDAO::getMovie($_GET['movie']);
+        $movies = MovieDAO::getMovie($id);
         // post review
-        if (isset($_POST['action']) && $_POST['action'] == 'post-review')
+        if ($method == "POST")
         {
-            $validation = self::validateReview();
+            $validation = self::_validateReview();
             $contentValidation = $validation['hasContent'];
             $ratingValidation = $validation['hasRating'];
             if ($contentValidation == "pass" && $ratingValidation == "pass")
-                echo self::handlePostReview();
+                echo self::_handlePostReview();
         }
         // display page
         if (count($movies) > 0) {

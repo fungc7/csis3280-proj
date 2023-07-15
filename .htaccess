@@ -1,0 +1,26 @@
+RewriteEngine On
+
+# a simple rewrite for RestAPI
+# this needs to be written first before the others otherwise it will not work
+RewriteRule RestAPI RestAPI.php [QSA]
+
+# if it is not an existing file
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# if it is not an existing directory
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# if it is not an image or csss
+RewriteCond %{REQUEST_URI} !\.(?:css|js|jpe?g|gif|png)$ [NC]
+
+# rewrite every request to our main controller
+RewriteRule ^(.+)$ index.php [QSA,L]
+
+# NC = No Case (not case sensitive, not really necessary 
+# since there are no characters in the pattern)
+
+# L = Last (it'll stop rewriting at after this Rewrite 
+# so make sure it's the last thing in your list of rewrites)
+
+# QSA = Query String Append, just in case you've got something like ?like=penguins 
+# on the end which you want to keep and pass to index.php.

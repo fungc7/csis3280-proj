@@ -36,7 +36,7 @@ class MovieCard {
     function render() {
         ?>
         <div class="movie card">
-            <a href="?movie=<?php echo $this->getMovieId(); ?>">
+            <a href="<?php echo SimpleRoute::getBaseURL() . "/movie/" . $this->getMovieId(); ?>">
                 <img src="<?php echo $this->IMAGE_URL_PREFIX . $this->getImageUrl();?>"/>
             </a>
             <div class="movie-info">

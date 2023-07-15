@@ -7,10 +7,10 @@ class CreateAccountPage extends BasePage {
         ?>
         <body>
         <header>
-                <h1><a href="?page=home">Logo</a></h1>
-            </header>
-            <?= self::_menuBar() ?><br> 
-            <h3 style="color: white">Create Account</h3>
+            <?= self::_logo() ?>
+        </header>
+        <?= self::_menuBar() ?><br> 
+        <h3 style="color: white">Create Account</h3>
 
 <!-- Start the page's add entry form -->
 <div class="form-group">
