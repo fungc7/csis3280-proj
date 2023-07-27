@@ -6,9 +6,7 @@ require_once('getCurrUrl.php');
 
 class HomePageApp {
     static function run() {
-        $url = getCurrUrl();
 
-        $_SESSION['lastPage'] = $url;
         MovieDAO::initialize('Movie');
         if (isset($_POST['logout'])) {
             LoginProcessor::logout();

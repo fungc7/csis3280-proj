@@ -64,12 +64,18 @@ switch($_SERVER['REQUEST_METHOD']) {
     case "GET": // Read / Select
         switch ($route['page']) {
             case 'home':
+                $_SESSION['lastPage'] = BASE_URL ;
                 HomePageApp::run();
                 break;
-
+            case '':
+                $_SESSION['lastPage'] = BASE_URL ;
+                HomePageApp::run();
+                break;
             case 'movie':
-                if ($route['id'] != '')
-                    MovieApp::run($route['id']);
+                if ($route['id'] != ''){
+                    $_SESSION['lastPage'] = BASE_URL . "index/movie/" . $route['id'];
+                    MovieApp::run($route['id']);                    
+                }
                 else
                     NotFoundPage::show();
                 break;
@@ -91,7 +97,7 @@ switch($_SERVER['REQUEST_METHOD']) {
                 break;
 
             default:
-                HomePageApp::run();
+                NotFoundPage::show();
                 break;
         }
         break;

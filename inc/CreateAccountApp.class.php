@@ -73,7 +73,7 @@ class CreateAccountApp {
                            
                         if (!$validationRes['email'])
                             self::$pageMessageState['emailError'] = '';
-                        print_r(self::$pwValidation);
+                        error_log(implode(", ", self::$pwValidation));
                         CreateAccountPage::show(self::$pageMessageState, self::$pwValidation);
                     }
                 }

@@ -23,13 +23,13 @@ class MovieDAO  {
        $selectMovie = "SELECT l.movieId, l.title, l.overview, l.imageUrl, l.releaseDate, l.backdropUrl, r.avgRating
         FROM
         (
-            SELECT * FROM movie
+            SELECT * FROM Movie
             WHERE movieId = :MovieId
         ) AS l
         LEFT JOIN
         (
             SELECT movieId, AVG(rating) AS avgRating
-            FROM review
+            FROM Review
             WHERE movieId = :MovieId
         ) AS r
         ON l.movieId = r.movieId;";
@@ -58,11 +58,11 @@ class MovieDAO  {
     static function getHomePageMovies() {
         $selectAllMovie = "SELECT l.movieId, l.title, l.overview, l.imageUrl, l.releaseDate, l.backdropUrl, r.avgRating
         FROM
-        movie as l
+        Movie as l
         LEFT JOIN
         (
             SELECT movieId, AVG(rating) AS avgRating
-            FROM review
+            FROM Review
             group by movieId
         ) AS r
         ON l.movieId = r.movieId
@@ -76,7 +76,7 @@ class MovieDAO  {
     static function getMovieReview() {
         
         //Prepare the Query
-        $selectReview = "SELECT reviewId, username, title, content, rating, reviewDate FROM review AS re LEFT JOIN MOVIE AS mov ON re.movieId = mov.movieId LEFT JOIN User AS usr ON re.userId = usr.userId;";
+        $selectReview = "SELECT reviewId, username, title, content, rating, reviewDate FROM Review AS re LEFT JOIN Movie AS mov ON re.movieId = mov.movieId LEFT JOIN User AS usr ON re.userId = usr.userId;";
         //execute the query
         self::$db->query($selectReview);
         self::$db->execute();

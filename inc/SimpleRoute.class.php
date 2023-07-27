@@ -17,7 +17,7 @@ class SimpleRoute{
     static function getRoute(){
         $rawUrl = $_SERVER['REQUEST_URI'];
         $url_suffix = str_replace(BASE_FOLDER, "", $rawUrl);
-        $uri_components = explode("/", $url_suffix);
+        $uri_components = array_values(array_diff(explode("/", $url_suffix), [""] ));
         // URL => http://localhost/csis3280_week10/index.php?action=delete&id=10
         // simplified URL  http://localhost/csis3280_week10/index/delete/10
         // the first component will be the localhost

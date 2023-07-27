@@ -6,8 +6,8 @@ require_once('getCurrUrl.php');
 
 class MovieApp {
     static function _handlePostReview() {
-        print_r(
-            [$_POST['userId'], $_POST['movieId'], $_POST['content'] ,$_POST['rating']]
+        error_log(
+            "{$_POST['userId']}, {$_POST['movieId']}, {$_POST['content']}, {$_POST['rating']}"
         );
         return ReviewDAO::insertReview($_POST['userId'], $_POST['movieId'], $_POST['content'] ,$_POST['rating']);
     }
@@ -26,10 +26,8 @@ class MovieApp {
         return $validation;
     }
     static function run($id, $method = "GET") {
-        $url =  getCurrUrl();
         $contentValidation = "default";
         $ratingValidation = "default";
-        $_SESSION['lastPage'] = $url;
 
         if (isset($_POST['logout'])) {
             LoginProcessor::logout();

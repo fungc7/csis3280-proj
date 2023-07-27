@@ -12,7 +12,7 @@ class ReviewDAO  {
 
     static function getMovieReview(string $movieID) {
         //Prepare the Query
-        $selectReview = "SELECT reviewId, username, title, content, rating, reviewDate FROM review AS re LEFT JOIN MOVIE AS mov ON re.movieId = mov.movieId LEFT JOIN User AS usr ON re.userId = usr.userId WHERE re.movieId = :movieID;";
+        $selectReview = "SELECT reviewId, username, title, content, rating, reviewDate FROM Review AS re LEFT JOIN Movie AS mov ON re.movieId = mov.movieId LEFT JOIN User AS usr ON re.userId = usr.userId WHERE re.movieId = :movieID;";
         //execute the query
         self::$db->query($selectReview);
         self::$db->bind('movieID', $movieID);

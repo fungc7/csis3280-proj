@@ -19,9 +19,9 @@ class MoviePage extends BasePage{
                 <p class="card-text"><?php echo $movie->getOverview(); ?></p>
             </div>
             <div class="reviews">
-                <h4 class="card-title">Reviews</h4>
+                <h4 class="card-title reviews-login-msg">Reviews</h4>
                 <?php if (!$loggedIn) { ?>
-                <div>
+                <div class="reviews-login-msg">
                     <p> <a href="<?php echo SimpleRoute::getBaseURL() . "/login"; ?>">Login</a> to write a review! </p>
                 </div>
                 <?php } ?>
@@ -30,6 +30,7 @@ class MoviePage extends BasePage{
                         $re->getReviewCard()->render();
                 ?>
                 <?php if ($loggedIn) { ?>
+                <div class="review-form">
                 <h4 class="card-title">Write Your Review !</h4>
                 <div class="form-group">
                     <form action="<?php echo SimpleRoute::getBaseURL() . "/movie/" . $movie->getMovieId()?>" method="post">
@@ -59,6 +60,7 @@ class MoviePage extends BasePage{
                         <input type="hidden" name="action" value="post-review">
                         <input type="submit" class="btn btn-dark" name="submit" value="Submit"/>
                     </form>
+                </div>
                 </div>
                 <?php } ?>
             </div>
