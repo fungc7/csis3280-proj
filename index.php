@@ -7,6 +7,7 @@ require_once('inc/LoginApp.class.php');
 require_once('inc/CreateAccountApp.class.php');
 require_once('inc/ChangePasswordApp.class.php');
 require_once('inc/RemoveReviewApp.class.php');
+require_once('inc/SearchMovieApp.class.php');
 // Utilities
 require_once('inc/utilities/LoginProcessor.class.php');
 // Pages
@@ -125,7 +126,9 @@ switch($_SERVER['REQUEST_METHOD']) {
                 else
                     routeToLastVisited();
                 break;
-
+            case 'search':
+                SearchMovieApp::run();
+                break;
             default:
                 NotFoundPage::show();
                 break;

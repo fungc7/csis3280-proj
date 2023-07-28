@@ -67,10 +67,18 @@ class BasePage
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo SimpleRoute::getBaseURL() . "/join"; ?>">Create account</a>
                         </li>
+                        
                     </ul>
                 <?php } ?>
-
+                
             </div>
+            <form action="<?php echo SimpleRoute::getBaseURL() . "/search" ?>" method="GET">
+                <input style="display: inline;" type="text" id="search" class="search" placeholder="Search movies..." name="movieNameString" />
+                <a style="display: inline;" class="nav-link" href="<?php echo SimpleRoute::getBaseURL() . "/changepassword" ?>">
+                    <button class="btn btn-dark">Search</button>
+                </a>
+            </form>
+            
             <!-- <a href="?page=login">Login</a>
             <a href="?page=join">Create account</a> -->
         </nav>

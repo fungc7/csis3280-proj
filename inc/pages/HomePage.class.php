@@ -10,13 +10,15 @@ class HomePage extends BasePage {
         <header>
             <?= self::_logo(); ?>
         </header>
-        <!-- Start the page's show data form -->
         <?= self::_menuBar() ?>
         <div class="container">
             <?php
                 foreach($movies as $mov)
                     $mov->getMovieCard()->render();
             ?>
+            <?php if (count($movies) == 0 ) { ?>
+                <p>No movies found.</p>
+            <?php } ?>
         </div>
         </body>
         <?php

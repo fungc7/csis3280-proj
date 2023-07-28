@@ -85,6 +85,27 @@ class MovieDAO  {
         
     }
 
+    static function searchMovieByName(string $nameStr) {
+        $query = "SELECT l.movieId, l.title, l.overview, l.imageUrl, l.releaseDate, l.backdropUrl, r.avgRating
+        FROM
+        Movie as l
+        LEFT JOIN
+        (
+            SELECT movieId, AVG(rating) AS avgRating
+            FROM Review
+            group by movieId
+        ) AS r
+        ON l.movieId = r.movieId
+        WHERE l.title COLLATE utf8mb4_general_ci LIKE CONCAT('%', :movieName, '%') ";
+
+        //execute the query
+        self::$db->query($query);
+        self::$db->bind('movieName', $nameStr);
+        self::$db->execute();
+        //Return row results
+        return self::$db->resultSet();
+    }
+
 }
 
 
