@@ -19,7 +19,7 @@ class MoviePage extends BasePage{
                 <p class="card-text"><?php echo $movie->getOverview(); ?></p>
             </div>
             <div class="reviews">
-                <h4 class="card-title reviews-login-msg">Reviews</h4>
+                <h4 class="card-title reviews-login-msg">Reviews <small>(Total: <?php echo count($review) ?>)</small></h4>
                 <?php if (!$loggedIn) { ?>
                 <div class="reviews-login-msg">
                     <p> <a href="<?php echo SimpleRoute::getBaseURL() . "/login"; ?>">Login</a> to write a review! </p>
