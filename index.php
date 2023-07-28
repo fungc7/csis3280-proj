@@ -58,8 +58,19 @@ switch($_SERVER['REQUEST_METHOD']) {
 
             case 'changepassword':
                 $changePwRes = ChangePasswordApp::run("POST");
-                if ($changePwRes)
-                    routeToLastVisited();
+                switch ($changePwRes['error']) {
+                    case 'BadRequest':
+                        ChangePasswordApp::run("GET");
+                        break;
+                    case 'UpdateError':
+                        ChangePasswordApp::run("GET", changePwError: true);
+                        break;
+                    case null:
+                        LoginProcessor::logout();
+                        LoginApp::run("postAccountCreation");
+                        break;
+                    default:
+                }        
                 break;
 
             default:

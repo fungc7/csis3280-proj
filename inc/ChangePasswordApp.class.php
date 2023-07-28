@@ -10,11 +10,11 @@ class ChangePasswordApp {
     static $passedColor = 'mediumseagreen';
     static $failedColor = 'crimson';
 
-    static function run($method) {
+    static function run($method, $changePwError = false) {
         
         switch ($method) {
             case 'GET':
-                ChangePasswordPage::show(self::$pageMessageState,self::$pwValidation);
+                ChangePasswordPage::show(self::$pageMessageState,self::$pwValidation, $changePwError);
                 break;
             case 'POST':
                 if ($_POST['action'] == 'update') {
@@ -32,6 +32,7 @@ class ChangePasswordApp {
                         if (! $user[0]->verifyPassword($maskedPw)) {
                             self::$pageMessageState['oldPwError'] = '';
                             $oldPwError = true;
+                            return ['error' => 'OldPasswordError'];
                         }
                     }
                     
@@ -41,31 +42,34 @@ class ChangePasswordApp {
                     if (! $noPasswordError) {
                         self::$pageMessageState['newPwError'] = '';
                         $newPwError = true;
+                        return ['error' => 'NewPasswordError'];
                     }
                                         
                     // validate confirm password
                     if ($newPassword != $confirmNewPassword){
                         self::$pageMessageState['confirmPwError'] = '';
                         $confirmPwError = true;
+                        return ['error' => 'ConfirmPasswordError'];
                     }
                     
                     if (!$oldPwError && !$newPwError && !$confirmPwError) {
                         $updateRes = UserDAO::updatePassword($_SESSION['user'], hash("sha256", $newPassword));
                         if ($updateRes)
-                            return true;
+                            return ['error' => null];
                         else {
                             self::$pageMessageState['updateError'] = '';
-                            ChangePasswordPage::show(self::$pageMessageState,self::$pwValidation);
+                            ChangePasswordPage::show(self::$pageMessageState,self::$pwValidation, $changePwError);
+                            return ['error' => 'UpdateError'];
                         }
                     }
                     else {
-                        ChangePasswordPage::show(self::$pageMessageState,self::$pwValidation);
+                        ChangePasswordPage::show(self::$pageMessageState,self::$pwValidation, $changePwError);
                     }
                 }
-                return false;
+                return ['error' => 'BadRequest'];
                 break;
             default:
-                ChangePasswordPage::show(self::$pageMessageState, self::$pwValidation);
+                ChangePasswordPage::show(self::$pageMessageState, self::$pwValidation, $changePwError);
                 break;
         }
 

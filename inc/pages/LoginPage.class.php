@@ -4,6 +4,7 @@ require_once('BasePage.class.php');
 class LoginPage extends BasePage{
     public static $failLoginMsg = "Incorrect Username or Password.";
     public static $postAccountCreationMsg = "Create account successful! Please try to login with the new account!";
+    public static $postPasswordChangeMsg = "Update password successful! Please login again with the new password.";
 
     static function _body($mode) {
         ?> 
@@ -22,6 +23,9 @@ class LoginPage extends BasePage{
                     break;
                 case "postAccountCreation":
                     echo "<div class=\"alert alert-success\">" . self::$postAccountCreationMsg . "</div>";
+                    break;
+                case "postPasswordChange":
+                    echo "<div class=\"alert alert-success\">" . self::$postPasswordChangeMsg . "</div>";
                     break;
                 default:
                     break;

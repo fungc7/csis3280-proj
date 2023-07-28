@@ -2,8 +2,11 @@
 
 class ChangePasswordPage extends BasePage
 {
-    static function _body($hidden, $pwValidation)
+    static function _body($hidden, $pwValidation, $changePwError)
     {
+        $hideChangePwError = 'hidden';
+        if ($changePwError)
+            $hideChangePwError = '';
 ?>
         <body>
             <header>
@@ -13,6 +16,9 @@ class ChangePasswordPage extends BasePage
             <h3 style="color: white">Change Password</h3>
             
             <div class="form-group">
+            <div class="alert alert-danger" <?= $hideChangePwError ?>>
+            Unable to update password at this time. Please try again later.
+        </div>
             <div class="alert alert-danger" <?= $hidden['oldPwError'] ?>>
             Incorrect original password.
         </div>
@@ -50,10 +56,10 @@ class ChangePasswordPage extends BasePage
 <?php
     }
 
-    static function show($pageErrMsg, $pwValidation)
+    static function show($pageErrMsg, $pwValidation, $changePwError)
     {
         self::_header();
-        self::_body($pageErrMsg, $pwValidation);
+        self::_body($pageErrMsg, $pwValidation, $changePwError);
         self::_footer();
     }
 }
