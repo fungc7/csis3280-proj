@@ -33,6 +33,19 @@ class ReviewDAO  {
 
         return self::$db->lastInsertedId();
     }
+
+    static function removeReview(string $userId, string $reviewId) {
+        $query = "DELETE FROM Review WHERE userId = :UserID AND reviewId = :ReviewID";
+        try {
+            self::$db->query($query);
+            self::$db->bind('UserID', $userId);
+            self::$db->bind('ReviewID', $reviewId);
+            self::$db->execute();
+        }
+        catch (Exception $e) {
+            error_log($e->getMessage());
+        } 
+    }
 }
 
 ?>

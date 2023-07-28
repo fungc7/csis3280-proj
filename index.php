@@ -6,6 +6,7 @@ require_once('inc/MovieApp.class.php');
 require_once('inc/LoginApp.class.php');
 require_once('inc/CreateAccountApp.class.php');
 require_once('inc/ChangePasswordApp.class.php');
+require_once('inc/RemoveReviewApp.class.php');
 // Utilities
 require_once('inc/utilities/LoginProcessor.class.php');
 // Pages
@@ -72,7 +73,11 @@ switch($_SERVER['REQUEST_METHOD']) {
                     default:
                 }        
                 break;
-
+            case 'remove':
+                $reviewId = $route['id'];
+                RemoveReviewApp::remove($reviewId);
+                routeToLastVisited();
+                break;
             default:
                 NotFoundPage::show();
                 break;
