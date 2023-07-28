@@ -3,7 +3,7 @@
 define('AUTHOR', 'Ivan Fung');
 define('STUDENT_ID', '300371938');
 define("IMAGE_URL", "https://image.tmdb.org/t/p/w1280");
-
+define("PROJECT_NAME", "BDMI");
 // DB config
 define("DB_HOST", "localhost");  
 define("DB_USER", "root");  

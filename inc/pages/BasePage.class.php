@@ -34,7 +34,7 @@ class BasePage
     static function _logo()
     {
     ?>
-        <h1 ><a style="text-decoration: none; color: inherit;" href="<?php echo SimpleRoute::getBaseURL(); ?>">My Movie Site</a></h1>
+        <h1 ><a style="text-decoration: none; color: inherit;" href="<?php echo SimpleRoute::getBaseURL(); ?>"><?= PROJECT_NAME?></a></h1>
     <?php
     }
 
@@ -55,6 +55,7 @@ class BasePage
             
                 <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) { ?>
                     <span class="navbar-text" style="color: white;">Hi, <?= $_SESSION['user'] ?></span>
+                    <a class="nav-link" href="<?php echo SimpleRoute::getBaseURL() . "/changepassword" ?>"> <button class="btn btn-dark">Change Password</button></a>
                     <a class="nav-link"><form class="form-inline" action="<?php echo SimpleRoute::getBaseURL() . "/logout" ?>" method="POST">
                         <input type="submit" class="btn btn-dark" name="logout" value="Logout">
                     </form></a>

@@ -5,6 +5,7 @@ require_once('inc/HomePageApp.class.php');
 require_once('inc/MovieApp.class.php');
 require_once('inc/LoginApp.class.php');
 require_once('inc/CreateAccountApp.class.php');
+require_once('inc/ChangePasswordApp.class.php');
 // Utilities
 require_once('inc/utilities/LoginProcessor.class.php');
 // Pages
@@ -55,6 +56,12 @@ switch($_SERVER['REQUEST_METHOD']) {
                     NotFoundPage::show();
                 break;
 
+            case 'changepassword':
+                $changePwRes = ChangePasswordApp::run("POST");
+                if ($changePwRes)
+                    routeToLastVisited();
+                break;
+
             default:
                 NotFoundPage::show();
                 break;
@@ -94,6 +101,13 @@ switch($_SERVER['REQUEST_METHOD']) {
                     routeToLastVisited();
                 else
                     CreateAccountApp::run("GET");
+                break;
+            
+            case 'changepassword':
+                if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'])
+                    ChangePasswordApp::run("GET");
+                else
+                    routeToLastVisited();
                 break;
 
             default:

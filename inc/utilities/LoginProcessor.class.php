@@ -5,7 +5,10 @@ class LoginProcessor {
     static function checkLogin(): bool {
         UserDAO::initialize('User');
         $usernameEmail = $_POST["username-email"];
-        $maskedPw = hash("sha256", $_POST["password"]);
+        $pw = $_POST["password"];
+        if (strlen($usernameEmail) == 0 || strlen($pw) == 0)
+            return false;
+        $maskedPw = hash("sha256", $pw);
         $usersByName = UserDAO::getUser($usernameEmail);
         if (count($usersByName) > 0) {
             if ($usersByName[0]->verifyPassword($maskedPw)) {

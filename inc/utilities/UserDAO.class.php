@@ -74,6 +74,23 @@ class UserDAO  {
        return self::$db->resultSet();
     }
 
+    static function updatePassword(string $username, string $maskedPw) {
+        $updatePassword = "UPDATE User 
+        SET maskedPw = :MaskedPw
+        WHERE username = :userName;";
+        try {
+            self::$db->query($updatePassword);
+            self::$db->bind('MaskedPw', $maskedPw);
+            self::$db->bind('userName', $username);
+            self::$db->execute();
+            return true;
+        }
+        catch (Exception $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
 }
 
 
