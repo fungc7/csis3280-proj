@@ -75,10 +75,7 @@ class ReviewCard
                 <span class="orange"><?php echo $this->getRating(); ?></span>
             </div>
             <span class="font-weight-light"><?php echo $this->getReviewDate(); ?></span>
-            <?php if ($_SESSION['user'] == $this->getUsername()) { ?>
-            <form>
-
-            </form>
+            <?php if (isset($_SESSION['user']) && $_SESSION['user'] == $this->getUsername()) { ?>
             <form action="<?php echo SimpleRoute::getBaseURL() . "/remove/" . $this->getReviewId() ?>" method="POST">
                 <input type="hidden" name="userId" value="<?= $_SESSION['userid'] ?>">
                 <input type="submit" class="remove-card font-weight-light" value="Delete" />

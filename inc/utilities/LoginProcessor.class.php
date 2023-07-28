@@ -29,6 +29,8 @@ class LoginProcessor {
     }
     static function logout () {
         $_SESSION['loggedin'] = false;
+        unset($_SESSION['user']);
+        unset($_SESSION['userid']);
     }
     static function updateLoginStatus(bool $loginRes) {
         if ($loginRes) 

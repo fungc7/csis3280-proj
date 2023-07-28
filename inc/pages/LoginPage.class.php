@@ -9,6 +9,12 @@ class LoginPage extends BasePage{
     static function _body($mode) {
         ?> 
         <body>
+            <script src="https://www.google.com/recaptcha/api.js" async defer ></script>
+            <script>
+                function enableButton() {
+                    document.getElementById("submit-button").disabled = false;
+                }
+            </script>
             <header>
             <?= self::_logo() ?>
             </header>
@@ -47,7 +53,8 @@ class LoginPage extends BasePage{
                         <input type="password" class="form-control" name="password" id="password" placeholder="Password"><br>    
                     </div>
                     <input type="hidden" name="action" value="login">
-                    <input type="submit" class="btn btn-dark" value="Login">
+                    <div class="g-recaptcha" data-sitekey=<?= RECAPTCHA_KEY ?> data-callback="enableButton"></div>
+                    <input type="submit" id="submit-button" class="btn btn-dark" value="Login" disabled="disabled">
                 </form>
             </div>
         </body>

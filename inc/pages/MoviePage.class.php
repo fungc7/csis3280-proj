@@ -9,6 +9,12 @@ class MoviePage extends BasePage{
         $loggedIn = isset($_SESSION['loggedin']) && $_SESSION['loggedin'];
         ?>
         <body>
+            <script src="https://www.google.com/recaptcha/api.js" async defer ></script>
+            <script>
+                function enableButton() {
+                    document.getElementById("submit-button").disabled = false;
+                }
+            </script>
                 <header>
                 <?= self::_logo() ?>
                 </header>
@@ -58,7 +64,8 @@ class MoviePage extends BasePage{
                         >
                         <input type="hidden" name="movieId" value="<?php echo $movie->getMovieId(); ?>" />
                         <input type="hidden" name="action" value="post-review">
-                        <input type="submit" class="btn btn-dark" name="submit" value="Submit"/>
+                        <div class="g-recaptcha" data-sitekey=<?= RECAPTCHA_KEY ?> data-callback="enableButton"></div>
+                        <input type="submit" class="btn btn-dark" id="submit-button" name="submit" value="Submit" disabled="disabled" />
                     </form>
                 </div>
                 </div>

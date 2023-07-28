@@ -6,6 +6,12 @@ class CreateAccountPage extends BasePage {
     static function _body($hidden, $pwValidation) {
         ?>
         <body>
+        <script src="https://www.google.com/recaptcha/api.js" async defer ></script>
+        <script>
+            function enableButton() {
+                document.getElementById("submit-button").disabled = false;
+            }
+        </script>
         <header>
             <?= self::_logo() ?>
         </header>
@@ -40,7 +46,8 @@ class CreateAccountPage extends BasePage {
                 <li style="color: <?= $pwValidation['number'] ?>">Password must contain number</li>
             </ul>
             <input type="hidden" name="action" value="create">
-            <input type="submit" class="btn btn-primary" value="Create">
+            <div class="g-recaptcha" data-sitekey=<?= RECAPTCHA_KEY ?> data-callback="enableButton"></div>
+            <input type="submit" class="btn btn-primary" id="submit-button" value="Create" disabled="disabled">
         </form>
     </div>
     </body>
