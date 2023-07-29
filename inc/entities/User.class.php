@@ -4,6 +4,8 @@ class User {
     private $userId;
     private $username;
     private $maskedPw;
+    private $email;
+    private $age;
 
     // public function __construct($id, $name, $pwMasked)
     // {
@@ -27,6 +29,16 @@ class User {
         return $this->maskedPw;
     }
 
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getAge()
+    {
+        return $this->age;
+    }
+
     public function setUserId($id)
     {
         $this->userId = $id;
@@ -40,6 +52,16 @@ class User {
     public function setMaskedPw($pwMasked)
     {
         $this->maskedPw = $pwMasked;
+    }
+
+    public function setAge($age)
+    {
+        $this->age = $age;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 
     public function verifyPassword(string $maskedPw)

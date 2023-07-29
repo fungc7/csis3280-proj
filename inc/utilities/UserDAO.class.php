@@ -16,13 +16,15 @@ class UserDAO  {
     // Remember that Create means INSERT
     static function createUser(User $newUser) {
         
-        $insertReservation = "INSERT INTO User (userId, username, maskedPw) VALUES (:userID, :userName, :maskedPassword)";
+        $insertReservation = "INSERT INTO User (userId, username, maskedPw, email, age) VALUES (:userID, :userName, :maskedPassword, :Email, :Age)";
         // QUERY BIND EXECUTE 
         // You may want to return the last inserted id
         self::$db->query($insertReservation);
         self::$db->bind(':userID', $newUser->getUserId());
         self::$db->bind(':userName', $newUser->getUsername());
         self::$db->bind(':maskedPassword', $newUser->getMaskedPw());
+        self::$db->bind(':Email', $newUser->getEmail());
+        self::$db->bind(':Age', $newUser->getAge());
 
         self::$db->execute();
 

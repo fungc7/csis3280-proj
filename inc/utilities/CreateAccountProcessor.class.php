@@ -21,10 +21,14 @@ class CreateAccountProcessor {
             $username = $_POST["username"];
             $userId = hash("sha256", $_POST["username"]);
             $maskedPw = hash("sha256",$_POST["password"]);
+            $age = $_POST['age'];
+            $email = $_POST['email'];
             $user = new User();
             $user->setUserId($userId);
             $user->setUsername($username);
             $user->setMaskedPw($maskedPw);
+            $user->setEmail($email);
+            $user->setAge($age);
             UserDAO::initialize('User');
 
             UserDAO::createUser($user);

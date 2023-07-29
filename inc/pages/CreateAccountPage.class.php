@@ -26,6 +26,7 @@ class CreateAccountPage extends BasePage {
         </div>
         <div class="alert alert-danger" <?= $hidden['pwError']?>>Unable to create account: Password entered did not meet all requirements.</div>
         <div class="alert alert-danger" <?= $hidden['userNameExist']?>>Unable to create account: Username or Email already used.</div>
+        <div class="alert alert-danger" <?= $hidden['ageError']?>>Invalid age input</div>
         <form action="" method="post">
             <div class="form-outline w-50">
                 <label for="username" name="username">Username</label>
@@ -34,6 +35,10 @@ class CreateAccountPage extends BasePage {
             <div class="form-outline w-50">
                 <label for="email" name="email">Email</label>
                 <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="form-outline w-50">
+                <label for="age" name="age">Age</label>
+                <input type="text" class="form-control" name="age" id="age" placeholder="Age" required>
             </div>
             <div class="form-outline w-50">
                 <label for="password" name="password">Password</label>

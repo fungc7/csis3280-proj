@@ -5,15 +5,21 @@ require_once('inc/utilities/PasswordValidator.class.php');
 
 class CreateAccountApp {
     static $pwValidation =['length' => '', 'capital' => '', 'small' => '', 'number' => ''];
-    static $pageMessageState = ['pwError'=> 'hidden', 'userNameExist' => 'hidden', 'emailError' => 'hidden'];
+    static $pageMessageState = ['pwError'=> 'hidden', 'userNameExist' => 'hidden', 'emailError' => 'hidden', 'ageError' => 'hidden'];
     static $passedColor = 'mediumseagreen';
     static $failedColor = 'crimson';
 
     static function validateInput() {
+        // Username validate implemented at the HTML REQUIRED attribute
         $emailValidation = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         
         if (!$emailValidation)
             self::$pageMessageState['emailError'] = "";
+
+        $ageValidation = filter_input(INPUT_POST, "age", FILTER_VALIDATE_INT, ["options" => ["min_range"=> 0, "max_range"=> 120]]);
+
+        if (!$ageValidation)
+            self::$pageMessageState['ageError'] = "";
 
         $noPasswordError = PasswordValidator::validatePassword('password');
         self::$pwValidation = PasswordValidator::$pwValidation;
