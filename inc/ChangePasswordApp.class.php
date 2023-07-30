@@ -23,50 +23,41 @@ class ChangePasswordApp {
                     $oldPassword = $_POST['oldPassword'];
                     $maskedPw = hash("sha256", $oldPassword);
 
-                    $oldPwError = $newPwError = $confirmPwError = false;
-
+                    $validOldPw  = true;
+                    $confirmPwError = false;
+                    
                     // validate old password
                     UserDAO::initialize("User");
                     $user = UserDAO::getUser($_SESSION['user']);
                     if (count($user) > 0) {
                         if (! $user[0]->verifyPassword($maskedPw)) {
+                            $validOldPw = false;
                             self::$pageMessageState['oldPwError'] = '';
-                            $oldPwError = true;
-                            return ['error' => 'OldPasswordError'];
                         }
                     }
                     
                     // validate new password
-                    $noPasswordError = PasswordValidator::validatePassword('newPassword');
+                    $validNewPw = PasswordValidator::validatePassword('newPassword');
                     self::$pwValidation = PasswordValidator::$pwValidation;
-                    if (! $noPasswordError) {
+                    if (! $validNewPw)
                         self::$pageMessageState['newPwError'] = '';
-                        $newPwError = true;
-                        return ['error' => 'NewPasswordError'];
-                    }
                                         
                     // validate confirm password
-                    if ($newPassword != $confirmNewPassword){
+                    if ($newPassword != $confirmNewPassword) {
                         self::$pageMessageState['confirmPwError'] = '';
                         $confirmPwError = true;
-                        return ['error' => 'ConfirmPasswordError'];
                     }
                     
-                    if (!$oldPwError && !$newPwError && !$confirmPwError) {
-                        $updateRes = UserDAO::updatePassword($_SESSION['user'], hash("sha256", $newPassword));
-                        if ($updateRes)
-                            return ['error' => null];
-                        else {
-                            self::$pageMessageState['updateError'] = '';
-                            ChangePasswordPage::show(self::$pageMessageState,self::$pwValidation, $changePwError);
-                            return ['error' => 'UpdateError'];
-                        }
+                    // log validation result
+                    error_log("validOldPw: $validOldPw, validNewPw: $validNewPw, confirmPwError: $confirmPwError");
+
+                    // Post Pw validation handling
+                    if ($validOldPw && $validNewPw && !$confirmPwError) {
+                        return UserDAO::updatePassword($_SESSION['user'], hash("sha256", $newPassword));
                     }
-                    else {
+                    else 
                         ChangePasswordPage::show(self::$pageMessageState,self::$pwValidation, $changePwError);
-                    }
                 }
-                return ['error' => 'BadRequest'];
                 break;
             default:
                 ChangePasswordPage::show(self::$pageMessageState, self::$pwValidation, $changePwError);

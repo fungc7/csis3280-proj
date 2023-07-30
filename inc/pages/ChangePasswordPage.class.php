@@ -28,7 +28,7 @@ class ChangePasswordPage extends BasePage
         <div class="alert alert-danger" <?= $hidden['confirmPwError']?>>
         New passwords do not match
     </div>
-                <form action="" method="post">
+                <form action="<?php echo SimpleRoute::getBaseURL() . "/changepassword" ?>" method="post">
                     <div class="form-outline w-50">
                         <label for="password" name="password">Original Password</label>
                         <input type="password" class="form-control" name="oldPassword" placeholder="Password" required>
