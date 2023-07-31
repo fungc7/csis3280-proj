@@ -28,7 +28,7 @@ function routeToLastVisited() {
 
 switch($_SERVER['REQUEST_METHOD']) {
 
-    case "POST": // Create / Insert
+    case "POST":
         switch ($route['page']) {
             case 'login':
                 $loginSuccess = LoginProcessor::checkLogin();
@@ -76,7 +76,7 @@ switch($_SERVER['REQUEST_METHOD']) {
         }
         break;
     
-    case "GET": // Read / Select
+    case "GET":
         switch ($route['page']) {
             case 'home':
                 $_SESSION['lastPage'] = BASE_URL ;
@@ -117,9 +117,11 @@ switch($_SERVER['REQUEST_METHOD']) {
                 else
                     routeToLastVisited();
                 break;
+                
             case 'search':
                 SearchMovieApp::run();
                 break;
+
             default:
                 NotFoundPage::show();
                 break;

@@ -2,7 +2,6 @@
 require_once('utilities/ReviewDAO.class.php');
 require_once('entities/Review.class.php');
 require_once('utilities/LoginProcessor.class.php');
-require_once('getCurrUrl.php');
 
 class MovieApp {
     static function _handlePostReview() {
@@ -13,10 +12,13 @@ class MovieApp {
     }
     static function _validateReview () {
         $validation = ["hasContent" => "default", "hasRating" => "default"];
+        // validate review content
         if (strlen($_POST['content']) > 0)
             $validateContent = "pass";
         else 
             $validateContent = "fail";
+
+        // validate rating
         if ($_POST['rating'] != "default")
             $validateRating = "pass";
         else
@@ -29,6 +31,7 @@ class MovieApp {
         $contentValidation = "default";
         $ratingValidation = "default";
 
+        // process logout
         if (isset($_POST['logout'])) {
             LoginProcessor::logout();
         }
@@ -42,7 +45,7 @@ class MovieApp {
             $contentValidation = $validation['hasContent'];
             $ratingValidation = $validation['hasRating'];
             if ($contentValidation == "pass" && $ratingValidation == "pass")
-                echo self::_handlePostReview();
+                error_log("_handlePostReview() result: " . self::_handlePostReview());
         }
         // display page
         if (count($movies) > 0) {

@@ -2,7 +2,6 @@
 require_once('utilities/MovieDAO.class.php');
 require_once('entities/Movie.class.php');
 require_once('utilities/LoginProcessor.class.php');
-require_once('getCurrUrl.php');
 
 class HomePageApp {
     static function run() {

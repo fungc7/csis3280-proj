@@ -11,16 +11,19 @@ class CreateAccountApp {
 
     static function validateInput() {
         // Username validate implemented at the HTML REQUIRED attribute
+        // email validation
         $emailValidation = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         
         if (!$emailValidation)
             self::$pageMessageState['emailError'] = "";
 
+        // age validation
         $ageValidation = filter_input(INPUT_POST, "age", FILTER_VALIDATE_INT, ["options" => ["min_range"=> 0, "max_range"=> 120]]);
 
         if (!$ageValidation)
             self::$pageMessageState['ageError'] = "";
 
+        // validate new password requirements
         $noPasswordError = PasswordValidator::validatePassword('password');
         self::$pwValidation = PasswordValidator::$pwValidation;
         // No password error, reset the color of password critirea as default

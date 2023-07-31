@@ -1,34 +1,26 @@
 <?php
-
-// MAKE SURE THE PORT FOR YOUR DB SERVER IS CORRECT 
-// AND set the dsn correctly!
-// Other than that, this code is complete.
+/*
+Reference to Assignment 3 starter folder - PDOService.class.php
+*/
 class PDOService {
-
-    //Pull in the attributes from the config
     private  $_host = DB_HOST;  
     private  $_user = DB_USER;  
     private  $_pass = DB_PASS;  
     private  $_dbname = DB_NAME;  
 
-    //Store the PDO Object
     private  $_dbh;
     private  $_error;
 
-    //Store the class we will be working with;
     private $_className;
 
-    //Store the Query Statement;
     private  $_pstmt;
 
 
-    //Construct our wrapper, build the DSN
     public function __construct(string $className) {
         
         $this->_className = $className;
 
-        //Assemble the DSN (Data Source Name)
-        $dsn = "mysql:host={$this->_host};dbname={$this->_dbname}"; // <------ FILL ME 
+        $dsn = "mysql:host={$this->_host};dbname={$this->_dbname}";
 
         //Set the options for PDO
         $options = array (

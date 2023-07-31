@@ -10,13 +10,14 @@ class PasswordValidator {
         $atLeast8Chars = false;
         if (strlen($_POST[$inputFieldKey]) >= 8)
             $atLeast8Chars = true;
-
+        // check contain capital letter
         $hasCapitalLetter = filter_input(INPUT_POST, $inputFieldKey, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[A-Z]/")));
-
+        // check contain small letter
         $hasSmallLetter = filter_input(INPUT_POST, $inputFieldKey, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[a-z]/")));
-
+        // check has number
         $hasNumber = filter_input(INPUT_POST, $inputFieldKey, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[0-9]/")));
 
+        // change message color base on validation result
         if ($atLeast8Chars)
             self::$pwValidation['length'] = self::$passedColor;
         else
