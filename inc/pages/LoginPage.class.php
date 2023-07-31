@@ -61,15 +61,6 @@ class LoginPage extends BasePage{
         <?php
     }
 
-    static function _footer() {
-        ?>
-            <!-- Start the page's footer -->            
-    </body>
-
-</html>
-        <?php
-    }
-
     static function show($mode) {
         self::_header();
         self::_body($mode);
