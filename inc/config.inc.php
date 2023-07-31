@@ -13,8 +13,8 @@ define("DB_NAME", "MovieSite");
 define("DB_PORT", "");
 
 // URL
-define("BASE_URL", "http://localhost/projs/php-proj/src/");
-define("BASE_FOLDER", "/projs/php-proj/src/");
+define("BASE_URL", "http://localhost/bdmi/");
+define("BASE_FOLDER", "/bdmi/");
 
 // Log config
 ini_set("date.timezone", "America/Vancouver");
